@@ -1,0 +1,13 @@
+name: 'Amazon ECS "Run Task" Action for GitHub Actions'
+description: 'Starts a new task using the specified task definition'
+inputs:
+  cluster:
+    description: "The name of the ECS service's cluster.  Will default to the 'default' cluster"
+    required: false
+    default: 'default'
+  task-definition:
+    description: 'The family and revision (family:revision) or full ARN of the task definition to run. If a revision is not specified, the latest ACTIVE revision is used.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
