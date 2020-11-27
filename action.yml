@@ -8,6 +8,15 @@ inputs:
   task-definition:
     description: 'The family and revision (family:revision) or full ARN of the task definition to run. If a revision is not specified, the latest ACTIVE revision is used.'
     required: true
+  subnets:
+    description: 'The subnet IDs (comma seperated) in which to run the task'
+    required: false
+  security-groups:
+    description: 'The security group IDs (comma seperated) in which to run the task'
+    required: false
+  assign-public-ip:
+    description: "Whether or not to assign a public IP to the task ('ENABLED' or 'DISABLED')"
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -10,11 +10,24 @@ async function run() {
         // Get inputs
         const taskDefinition = core.getInput('task-definition', { required: true });
         const cluster = core.getInput('cluster', { required: false });
+        const subnetsInput = core.getInput('subnets', { required: false });
+        const securityGroupsInput = core.getInput('security-groups', { required: false });
+        const assignPublicIp = core.getInput('assign-public-ip', { required: false });
+
+        const subnets = subnetsInput.split(",");
+        const securityGroups = securityGroupsInput.split(",");
 
         try {
             const params = {
                 cluster,
-                taskDefinition
+                taskDefinition,
+                networkConfiguration: {
+                    awsvpcConfiguration: {
+                        subnets,
+                        assignPublicIp,
+                        securityGroups,
+                    }
+                }
             };
 
             await ecs.runTask(params).promise();
