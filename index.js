@@ -9,6 +9,7 @@ async function run() {
 
         // Get inputs
         const taskDefinition = core.getInput('task-definition', { required: true });
+        const launchType = core.getInput('launch-type', { required: true });
         const cluster = core.getInput('cluster', { required: false });
         const subnetsInput = core.getInput('subnets', { required: false });
         const securityGroupsInput = core.getInput('security-groups', { required: false });
@@ -21,6 +22,7 @@ async function run() {
             const params = {
                 cluster,
                 taskDefinition,
+                launchType,
                 networkConfiguration: {
                     awsvpcConfiguration: {
                         subnets,

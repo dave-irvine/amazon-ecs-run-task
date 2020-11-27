@@ -8,6 +8,9 @@ inputs:
   task-definition:
     description: 'The family and revision (family:revision) or full ARN of the task definition to run. If a revision is not specified, the latest ACTIVE revision is used.'
     required: true
+  launch-type:
+    description: "The type of task to launch ('EC2' or 'FARGATE')"
+    required: true
   subnets:
     description: 'The subnet IDs (comma seperated) in which to run the task'
     required: false
