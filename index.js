@@ -32,7 +32,10 @@ async function run() {
                 }
             };
 
-            await ecs.runTask(params).promise();
+            const data = await ecs.runTask(params).promise();
+            const taskARN = data.tasks[0].taskArn;
+
+            core.setOutput("task-arn", taskARN);
         } catch (error) {
             core.setFailed("Failed to run task in ECS: " + error.message);
             throw (error);
