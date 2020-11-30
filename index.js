@@ -13,10 +13,20 @@ async function run() {
         const cluster = core.getInput('cluster', { required: false });
         const subnetsInput = core.getInput('subnets', { required: false });
         const securityGroupsInput = core.getInput('security-groups', { required: false });
+        const tagsInput = core.getInput('tags', { required: false });
         const assignPublicIp = core.getInput('assign-public-ip', { required: false });
 
         const subnets = subnetsInput.split(",");
         const securityGroups = securityGroupsInput.split(",");
+        const tagsArray = tagsInput.split(",");
+        const tags = tagsArray.map((tag) => {
+            const [key, value] = tag.split(":");
+
+            return {
+                key,
+                value
+            };
+        });
 
         try {
             const params = {
@@ -29,7 +39,8 @@ async function run() {
                         assignPublicIp,
                         securityGroups,
                     }
-                }
+                },
+                tags
             };
 
             const data = await ecs.runTask(params).promise();
