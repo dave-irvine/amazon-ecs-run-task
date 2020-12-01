@@ -15,6 +15,7 @@ async function run() {
         const securityGroupsInput = core.getInput('security-groups', { required: false });
         const tagsInput = core.getInput('tags', { required: false });
         const assignPublicIp = core.getInput('assign-public-ip', { required: false });
+        const waitForTask = core.getInput('wait-for-task-running', { required: false }) || 'true';
 
         const subnets = subnetsInput.split(",");
         const securityGroups = securityGroupsInput.split(",");
@@ -47,6 +48,12 @@ async function run() {
             const taskARN = data.tasks[0].taskArn;
 
             core.setOutput("task-arn", taskARN);
+
+            if (waitForTask) {
+                await ecs.waitFor('tasksRunning', {
+                    tasks: [ taskARN ],
+                }).promise();
+            }
         } catch (error) {
             core.setFailed("Failed to run task in ECS: " + error.message);
             throw (error);
