@@ -20,6 +20,15 @@ inputs:
   assign-public-ip:
     description: "Whether or not to assign a public IP to the task ('ENABLED' or 'DISABLED')"
     required: false
+  tags:
+    description: "The tags (key:value, comma seperated) to assign to the task"
+    required: false
+  wait-for-task-running:
+    description: "Whether or not to wait for the Task to be running (defaults to 'true')"
+    required: false
+outputs:
+  task-arn:
+    description: 'The ARN of the task that was started'
 runs:
   using: 'node12'
   main: 'dist/index.js'
